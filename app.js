@@ -4,6 +4,10 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
+const mongoose = require('mongoose');
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
@@ -19,8 +23,22 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json);
+app.use(methodOverride());
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// Conexión a Mongoose:
+mongoose.connect("mongodb://localhost/portfolio-API", function (err, res) {
+  if (err) {
+    console.log("ERROR: conectando a la base de datos. " + err);
+  }
+  // app.listen(3000, function () {
+  //   console.log("Servidor Node arrancado en http://localhost:3000");
+  // });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
