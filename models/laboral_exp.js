@@ -11,7 +11,7 @@ var laboralSchema = new Schema({
     descriptionOne: { type: String },
     titleTwo: { type: String },
     descriptionTwo: {type: String},
-    slug: {type: String},
+    slug: {type: String}
 });
 
 module.exports = mongoose.model("laboral", laboralSchema);
